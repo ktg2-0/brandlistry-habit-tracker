@@ -2,11 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import AddHabitTab from "./components/AddHabitTab.jsx";
+import AddHabitTab from "./AddHabitTab.jsx";
 
 function App() {
-const [activeTab, setActiveTab] = useState("Dashboard");
+const [activeTab, setActiveTab] = useState("");
+const [newHabit, setNewHabit] = useState("");
 const [menuOpen, setMenuOpen] = useState(false);
+
 
   // Habit state
   const [habits, setHabits] = useState([
@@ -17,7 +19,20 @@ const [menuOpen, setMenuOpen] = useState(false);
     { id: 5, name: "Journal", completed: false },
     { id: 6, name: "Sleep Early", completed: false },
   ]);
+const addHabit = () => {
+  if (newHabit.trim() === "") return;
 
+  setHabits([
+    ...habits,
+    {
+      id: Date.now(),
+      name: newHabit,
+      completed: false,
+    },
+  ]);
+
+  setNewHabit("");
+};
   // Toggle completion
   const toggleHabit = (id) => {
     setHabits(
@@ -65,7 +80,7 @@ const [menuOpen, setMenuOpen] = useState(false);
 
         <button onClick={() => {
           setActiveTab("addHabit");
-          setMenuOpen(false);
+          setMenuOpen(true);
         }}>
           Add Habit
         </button>
